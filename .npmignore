@@ -1,0 +1,8 @@
+*.coffee
+*.html
+.DS_Store
+.git*
+Cakefile
+Makefile
+src/
+test/
