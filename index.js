@@ -1,0 +1,1 @@
+module.exprts = './lib/Publisher.js'
