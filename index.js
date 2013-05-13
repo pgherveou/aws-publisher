@@ -1,1 +1,0 @@
-module.exports = require('./lib/Publisher.js')
