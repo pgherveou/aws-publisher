@@ -8,8 +8,6 @@ async  = require 'async'
 moment = require 'moment'
 {walk} = require 'findr'
 
-logger = require('./loggers').get 'util'
-
 # default expires header set to year + 10
 expireDate = moment().add('years', 10).format('ddd, DD MMM YYYY') + " 12:00:00 GMT"
 
@@ -22,30 +20,26 @@ module.exports =
 
     publishDir: ({origin, dest, filter}, cb)  ->
 
-      # add slash
-      # dest = "/#{dest}" if dest and dest[0] isnt '/'
-
       # set default filter
       filter or= -> true
 
       # convert origin folder to absolute
       origin = path.join path.resolve(origin)
-      logger.info "uploading new files from '#{origin}' to '#{dest}'"
-
+      console.log "uploading new files from '#{origin}' to '#{dest}'"
 
       walk origin, filter, (err, fileItems) =>
-        return logger.error err if err
+        return console.error err if err
         files = (file for file, stat of fileItems when stat.isFile())
 
         # create a task queue to upload file
         q = async.queue @publish, 2
         q.drain =  ->
-          logger.debug "All files were uploaded"
+          console.log "All files were uploaded"
           cb()
 
         files.forEach (file) =>
           filename = file.replace origin, dest
-          q.push {file, filename}, (err) -> if err then logger.error "Error uploading #{filename}", err.statusCode
+          q.push {file, filename}, (err) -> if err then console.error "[Error] uploading #{filename}", err.statusCode
 
     publish: ({file, filename}, cb) =>
 
@@ -77,12 +71,12 @@ module.exports =
             return cb err if err
             md5 = '"' + crypto.createHash('md5').update(buf).digest('hex') + '"'
             if md5 is res.headers.etag
-              logger.debug "[skip]    #{filename}"
+              console.log "[skip]    #{filename}"
               return cb null
             else if res.headers.etag
-              logger.debug "[UPDATE]  #{filename}"
+              console.log "[UPDATE]  #{filename}"
             else
-              logger.debug "[ADD]     #{filename}"
+              console.log "[ADD]     #{filename}"
 
             req  = @client.put filename, headers
             req.on 'response', (res) ->

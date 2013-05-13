@@ -1,1 +1,1 @@
-module.exprts = './lib/Publisher.js'
+module.exports = require('./lib/Publisher.js')
