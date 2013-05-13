@@ -1,6 +1,16 @@
 aws-publisher
 =============
 
+install
+------
+
+```
+$ npm install aws-publisher
+```
+
+usage
+-----
+
 aws-publisher let you upload files within a directory to your amazon s3 bucket.
 - it only uploads new or modified files to your bucket.
 - it sets a far expiry date and zip files
