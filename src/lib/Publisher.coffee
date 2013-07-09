@@ -32,10 +32,8 @@ module.exports =
         files = (file for file, stat of fileItems when stat.isFile())
 
         # create a task queue to upload file
-        q = async.queue @publish, 2
-        q.drain =  ->
-          console.log "All files were uploaded"
-          cb()
+        q = async.queue @publish, 5
+        q.drain = cb
 
         files.forEach (file) =>
           filename = file.replace origin, dest
