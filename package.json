@@ -1,6 +1,6 @@
 {
   "name": "aws-publisher",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "publish your static assets to amazon s3",
   "author": "PG Herveou",
   "license": "BSD",
