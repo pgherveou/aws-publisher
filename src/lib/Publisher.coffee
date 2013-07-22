@@ -8,6 +8,8 @@ async  = require 'async'
 moment = require 'moment'
 {walk} = require 'findr'
 
+DEBUG  = process.env.DEBUG
+
 # default expires header set to year + 10
 expireDate = moment().add('years', 10).format('ddd, DD MMM YYYY') + " 12:00:00 GMT"
 
@@ -69,7 +71,7 @@ module.exports =
             return cb err if err
             md5 = '"' + crypto.createHash('md5').update(buf).digest('hex') + '"'
             if md5 is res.headers.etag
-              console.log "[skip]    #{filename}"
+              console.log "[skip]    #{filename}" if DEBUG
               return cb null
             else if res.headers.etag
               console.log "[UPDATE]  #{filename}"
