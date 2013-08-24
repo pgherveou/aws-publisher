@@ -19,6 +19,7 @@ aws-publisher let you upload files within a directory to your amazon s3 bucket.
 Publisher = require 'aws-publisher'
 
 # create s3 publisher
+# see https://github.com/LearnBoost/knox for options list
 publisher = new Publisher bucket: 'name',  key: 'xx', secret: 'xx'
 
 # define filter closure that will only select js, png, and css file
