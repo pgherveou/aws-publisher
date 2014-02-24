@@ -47,6 +47,6 @@ function filter (f, stat) {
 }
 
 // publish 'public' dir to root folder '' of the  bucket
-publisher.publishDir({origin: 'public', dest: '', filter}, cb);
+publisher.publishDir({origin: 'public', dest: '', filter: filter}, cb);
 
 ```
